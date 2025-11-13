@@ -7,7 +7,7 @@ import express from "express";
 import cors from "cors";
 import proxy from "express-http-proxy";
 import morgan from "morgan";
-import rateLimit from "express-rate-limit";
+import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import axios from "axios";
@@ -36,7 +36,7 @@ const limiter = rateLimit({
   message: { error: "Too many requests, please try again later." },
   standardHeaders: true,
   legacyHeaders: true,
-  keyGenerator: (req: any) => req.ip,
+  keyGenerator: (req: any) => ipKeyGenerator(req.ip),
 });
 app.use(limiter);
 
@@ -50,6 +50,6 @@ app.use("/", proxy("http://localhost:6001"));
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
+  console.log(`Listening at http://localhost:${port}`);
 });
 server.on("error", console.error);
