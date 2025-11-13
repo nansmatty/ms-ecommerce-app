@@ -1,0 +1,26 @@
+{
+  "name": "@auth-workspace/auth_service-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@auth-workspace/auth_service"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "options": {
+          "jestConfig": "apps/auth_service-e2e/jest.config.cts",
+          "passWithNoTests": true
+        },
+        "dependsOn": [
+          "@auth-workspace/auth_service:build",
+          "@auth-workspace/auth_service:serve"
+        ]
+      }
+    }
+  }
+}
