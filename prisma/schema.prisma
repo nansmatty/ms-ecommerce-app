@@ -15,20 +15,20 @@ datasource db {
 }
 
 model images {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
   file_id String
   url     String
-  userId  String? @db.ObjectId @unique
-  users   users? @relation(fields: [userId], references: [id])
+  userId  String? @unique @db.ObjectId
+  users   users?  @relation(fields: [userId], references: [id])
 }
 
 model users {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  email   String @unique
-  password String?
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String?
   following String[]
-  avatar images?
+  avatar    images?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
